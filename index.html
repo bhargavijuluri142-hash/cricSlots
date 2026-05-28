@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Box Cricket Slot Booking</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.65),
+                    rgba(0, 0, 0, 0.75)),
+                url("https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1600&q=80");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            width: 95%;
+            margin: 15px auto;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            backdrop-filter: blur(12px);
+
+            border-radius: 20px;
+
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+
+            border: 2px solid rgba(255, 255, 255, 0.12);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.35),
+                0 0 15px rgba(0, 255, 136, 0.15);
+        }
+
+        nav h2 {
+            color: #00ff88;
+            font-size: 28px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #00ff88;
+        }
+
+        /* HEADER */
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 48px;
+            color: #00ff88;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
+        header p {
+            font-size: 18px;
+            color: #dfefff;
+        }
+
+        /* BOOKING SECTION */
+
+        .booking-section {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+        }
+
+        .form-box,
+        .slots-box {
+            width: 420px;
+            padding: 30px;
+            border-radius: 25px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(14px);
+
+            border: 2px solid rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.4),
+                0 0 15px rgba(0, 255, 136, 0.1);
+
+            transition: 0.3s;
+        }
+
+        .form-box:hover,
+        .slots-box:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .form-box h2,
+        .slots-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #00ff88;
+            font-size: 28px;
+        }
+
+        /* INPUTS */
+
+        input,
+        select {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 18px;
+
+            border-radius: 14px;
+
+            border: 2px solid rgba(255, 255, 255, 0.12);
+
+            background: rgba(255, 255, 255, 0.08);
+
+            color: white;
+            font-size: 16px;
+
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #d7d7d7;
+        }
+
+        input:focus,
+        select:focus {
+            border: 2px solid #00ff88;
+
+            box-shadow:
+                0 0 10px rgba(0, 255, 136, 0.5);
+
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        input[type="date"] {
+            color-scheme: dark;
+        }
+
+        ::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(1);
+        }
+
+        select option {
+            color: black;
+        }
+
+        /* BUTTON */
+
+        button {
+            width: 100%;
+            padding: 15px;
+
+            border: none;
+            border-radius: 14px;
+
+            background:
+                linear-gradient(135deg,
+                    #00ff88,
+                    #00c853);
+
+            color: #041320;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+
+            box-shadow:
+                0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        #message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+            color: #ffe082;
+        }
+
+        /* SLOT CARD */
+
+        .slot-card {
+            background: rgba(255, 255, 255, 0.08);
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            margin-bottom: 14px;
+
+            border-left: 5px solid #00ff88;
+
+            transition: 0.3s;
+        }
+
+        .slot-card:hover {
+            transform: translateX(5px);
+
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .slot-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .available {
+            color: #69f0ae;
+            font-weight: bold;
+        }
+
+        .full {
+            color: #ff5252;
+            font-weight: bold;
+        }
+
+        /* DASHBOARD */
+
+        .dashboard {
+            padding: 40px 20px;
+        }
+
+        .dashboard h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #00ff88;
+            font-size: 35px;
+        }
+
+        .dashboard-cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 260px;
+
+            padding: 28px;
+
+            border-radius: 22px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(10px);
+
+            border: 2px solid rgba(255, 255, 255, 0.12);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 0 20px rgba(0, 255, 136, 0.25);
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            color: #dbefff;
+        }
+
+        .card p {
+            font-size: 34px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        /* BOOKINGS LIST */
+
+        .bookings-list {
+            padding: 40px 20px;
+        }
+
+        .bookings-list h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #00ff88;
+            font-size: 32px;
+        }
+
+        .booking-card {
+            background: rgba(255, 255, 255, 0.08);
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            margin-bottom: 18px;
+
+            border-left: 5px solid #00ff88;
+
+            transition: 0.3s;
+        }
+
+        .booking-card:hover {
+            transform: scale(1.01);
+
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .booking-card p {
+            margin: 8px 0;
+        }
+
+        .booking-card button {
+            margin-top: 15px;
+
+            background:
+                linear-gradient(135deg,
+                    #ff1744,
+                    #ff5252);
+
+            color: white;
+        }
+
+        /* ABOUT & CONTACT */
+
+        .about-section,
+        .contact-section {
+            padding: 60px 20px;
+        }
+
+        .about-box,
+        .contact-box {
+            max-width: 900px;
+            margin: auto;
+            padding: 35px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .about-box h2,
+        .contact-box h2 {
+            color: #00ff88;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 35px;
+        }
+
+        .about-box p,
+        .contact-box p {
+            line-height: 1.8;
+            font-size: 17px;
+            color: #e0f7fa;
+            margin-bottom: 15px;
+        }
+
+        .contact-box strong {
+            color: #00ff88;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width:768px) {
+
+            .form-box,
+            .slots-box,
+            .card {
+                width: 100%;
+            }
+
+            .dashboard-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            header h1 {
+                font-size: 34px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <h2>🏏 Turf Booking</h2>
+
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#booking">Book Slot</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+    </nav>
+
+    <!-- HEADER -->
+
+    <header>
+        <h1>🏏 Box Cricket Turf Booking</h1>
+        <p>Book Your Cricket Slot Instantly</p>
+    </header>
+
+    <!-- BOOKING SECTION -->
+
+    <section class="booking-section" id="booking">
+
+        <div class="form-box">
+
+            <h2>Book Your Slot</h2>
+
+            <input type="text" id="name" placeholder="Enter Your Name">
+
+            <input type="tel" id="phone" placeholder="Enter Phone Number">
+
+            <input type="date" id="date">
+
+            <select id="time">
+
+                <option value="">
+                    Select Time Slot
+                </option>
+
+                <option>6 AM - 7 AM</option>
+                <option>7 AM - 8 AM</option>
+                <option>8 AM - 9 AM</option>
+                <option>9 AM - 10 AM</option>
+                <option>4 PM - 5 PM</option>
+                <option>5 PM - 6 PM</option>
+                <option>6 PM - 7 PM</option>
+                <option>7 PM - 8 PM</option>
+                <option>8 PM - 9 PM</option>
+                <option>9 PM - 10 PM</option>
+
+            </select>
+
+            <button onclick="bookSlot()">
+                Book Slot
+            </button>
+
+            <h3 id="message"></h3>
+
+        </div>
+
+        <div class="slots-box">
+
+            <h2>Cricket Slot Status</h2>
+
+            <div id="slotsContainer"></div>
+
+        </div>
+
+    </section>
+
+    <!-- DASHBOARD -->
+
+    <section class="dashboard" id="dashboard">
+
+        <h2>🏏 Admin Dashboard</h2>
+
+        <div class="dashboard-cards">
+
+            <div class="card">
+                <h3>Total Bookings</h3>
+                <p id="totalBookings">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Total Revenue</h3>
+                <p id="revenue">₹0</p>
+            </div>
+
+            <div class="card">
+                <h3>Today's Occupancy</h3>
+                <p id="occupancy">0%</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- BOOKINGS LIST -->
+
+    <section class="bookings-list">
+
+        <h2>Booked Cricket Slots</h2>
+
+        <div id="bookingList"></div>
+
+    </section>
+
+    <!-- ABOUT -->
+
+    <section class="about-section" id="about">
+
+        <div class="about-box">
+
+            <h2>About Our Turf</h2>
+
+            <p>
+                Welcome to our premium Box Cricket Turf Booking platform.
+                Enjoy professional cricket turf facilities with friends and teams.
+            </p>
+
+            <p>
+                We provide high-quality nets, lighting systems, safe playing
+                areas, and easy online booking features.
+            </p>
+
+            <p>
+                Perfect for tournaments, practice matches, and weekend games.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- CONTACT -->
+
+    <section class="contact-section" id="contact">
+
+        <div class="contact-box">
+
+            <h2>Contact Us</h2>
+
+            <p><strong>📍 Address:</strong> Cricket Turf Arena, Hyderabad</p>
+
+            <p><strong>📞 Phone:</strong> +91 1111111111</p>
+
+            <p><strong>📧 Email:</strong> support@turfbooking.com</p>
+
+            <p><strong>🕒 Working Hours:</strong> 6 AM - 10 PM</p>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer>
+        <p>© 2026 Box Cricket Turf Booking | All Rights Reserved</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+        const slotPrice = 1000;
+
+        const slots = [
+
+            "6 AM - 7 AM",
+            "7 AM - 8 AM",
+            "8 AM - 9 AM",
+            "9 AM - 10 AM",
+            "4 PM - 5 PM",
+            "5 PM - 6 PM",
+            "6 PM - 7 PM",
+            "7 PM - 8 PM",
+            "8 PM - 9 PM",
+            "9 PM - 10 PM"
+
+        ];
+
+        function getBookings() {
+
+            return JSON.parse(
+                localStorage.getItem("cricketBookings")
+            ) || [];
+
+        }
+
+        function saveBookings(bookings) {
+
+            localStorage.setItem(
+                "cricketBookings",
+                JSON.stringify(bookings)
+            );
+
+        }
+
+        function bookSlot() {
+
+            const name =
+                document.getElementById("name").value;
+
+            const phone =
+                document.getElementById("phone").value;
+
+            const date =
+                document.getElementById("date").value;
+
+            const time =
+                document.getElementById("time").value;
+
+            const message =
+                document.getElementById("message");
+
+            if (!name || !phone || !date || !time) {
+
+                message.innerHTML =
+                    "Please Fill All Fields";
+
+                return;
+            }
+
+            if (phone.length < 10) {
+
+                message.innerHTML =
+                    "Enter Valid Phone Number";
+
+                return;
+            }
+
+            let bookings = getBookings();
+
+            const alreadyBooked = bookings.find(
+
+                booking =>
+
+                booking.date === date &&
+                booking.time === time
+
+            );
+
+            if (alreadyBooked) {
+
+                message.innerHTML =
+                    "❌ This Slot Is Already Booked";
+
+                return;
+            }
+
+            const booking = {
+
+                id: Math.floor(1000000000 + Math.random() * 9000000000),
+
+                name: name,
+                phone: phone,
+                date: date,
+                time: time
+
+            };
+
+            bookings.push(booking);
+
+            saveBookings(bookings);
+
+            message.innerHTML =
+                `🏏 Booking Confirmed | ID: ${booking.id}`;
+
+            document.getElementById("name").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("time").value = "";
+
+            displaySlots();
+            displayBookings();
+            updateDashboard();
+
+        }
+
+        function displaySlots() {
+
+            const container =
+                document.getElementById("slotsContainer");
+
+            container.innerHTML = "";
+
+            const bookings = getBookings();
+
+            const selectedDate =
+                document.getElementById("date").value;
+
+            slots.forEach(slot => {
+
+                const booked = bookings.find(
+
+                    booking =>
+
+                    booking.date === selectedDate &&
+                    booking.time === slot
+
+                );
+
+                const div =
+                    document.createElement("div");
+
+                div.classList.add("slot-card");
+
+                if (booked) {
+
+                    div.innerHTML = `
+
+                        <h3>${slot}</h3>
+
+                        <p class="full">
+                            ❌ Booked By ${booked.name}
+                        </p>
+
+                    `;
+
+                } else {
+
+                    div.innerHTML = `
+
+                        <h3>${slot}</h3>
+
+                        <p class="available">
+                            ✅ Available
+                        </p>
+
+                    `;
+
+                }
+
+                container.appendChild(div);
+
+            });
+
+        }
+
+        function displayBookings() {
+
+            const bookingList =
+                document.getElementById("bookingList");
+
+            bookingList.innerHTML = "";
+
+            const bookings =
+                getBookings();
+
+            bookings.slice().reverse().forEach(booking => {
+
+                const div =
+                    document.createElement("div");
+
+                div.classList.add("booking-card");
+
+                div.innerHTML = `
+
+                    <p>
+                        <strong>Booking ID:</strong>
+                        ${booking.id}
+                    </p>
+
+                    <p>
+                        <strong>Name:</strong>
+                        ${booking.name}
+                    </p>
+
+                    <p>
+                        <strong>Phone:</strong>
+                        ${booking.phone}
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong>
+                        ${booking.date}
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong>
+                        ${booking.time}
+                    </p>
+
+                    <button onclick="deleteBooking(${booking.id})">
+                        Cancel Booking
+                    </button>
+
+                `;
+
+                bookingList.appendChild(div);
+
+            });
+
+        }
+
+        function deleteBooking(id) {
+
+            let bookings =
+                getBookings();
+
+            bookings = bookings.filter(
+
+                booking =>
+                booking.id !== id
+
+            );
+
+            saveBookings(bookings);
+
+            displayBookings();
+            displaySlots();
+            updateDashboard();
+
+        }
+
+        function updateDashboard() {
+
+            const bookings =
+                getBookings();
+
+            document.getElementById("totalBookings").innerHTML =
+                bookings.length;
+
+            const revenue =
+                bookings.length * slotPrice;
+
+            document.getElementById("revenue").innerHTML =
+                `₹${revenue}`;
+
+            const occupancy = (
+
+                (bookings.length / slots.length) * 100
+
+            ).toFixed(1);
+
+            document.getElementById("occupancy").innerHTML =
+                `${occupancy}%`;
+
+        }
+
+        document
+            .getElementById("date")
+            .addEventListener(
+                "change",
+                displaySlots
+            );
+
+        displaySlots();
+        displayBookings();
+        updateDashboard();
+    </script>
+
+</body>
+
+</html>
